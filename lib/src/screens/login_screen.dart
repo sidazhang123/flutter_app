@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../blocs/provider.dart';
+
 import '../blocs/bloc.dart';
+import '../blocs/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 15.0),
           ),
-          submitButton(),
+          submitButton(bloc),
         ],
       ),
     );
@@ -26,10 +27,10 @@ class LoginScreen extends StatelessWidget {
         // everything added to sink will be automatically processed
         // through the stream by a transformer(handler)
         stream: bloc.email,
+        //outputs are added back to sink and present in snapshot
         builder: (context, snapshot) {
           return TextField(
             //put input text into changeEmail and add it to sink
-            //outputs are also present here
             onChanged: bloc.changeEmail,
             decoration: InputDecoration(
                 hintText: 'you@example.com',
@@ -56,11 +57,16 @@ class LoginScreen extends StatelessWidget {
         });
   }
 
-  Widget submitButton() {
-    return RaisedButton(
-      child: Text('login'),
-      color: Colors.lightBlue,
-      onPressed: () {},
+  Widget submitButton(Bloc bloc) {
+    return StreamBuilder(
+      stream: bloc.submitValid,
+      builder: (context, snapshot) {
+        return RaisedButton(
+          child: Text('login'),
+          color: Colors.lightBlue,
+          onPressed: snapshot.hasData ? bloc.submit : null,
+        );
+      },
     );
   }
 }
