@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/cat_animation.dart';
+import 'package:flutter_app/src/news.dart';
 
-void main() => runApp(CatAnimation());
+void main() => runApp(News());

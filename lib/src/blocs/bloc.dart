@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_app/src/mixins/validators.dart';
+import 'package:flutter_app/src/mixins/login_form_validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 //'with' must attach to a parent class to be inherited, and Object is generic
