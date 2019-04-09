@@ -8,6 +8,10 @@ import 'package:sqflite/sqflite.dart';
 import '../models/item_model.dart';
 import 'repository.dart';
 
+/*
+Source: "getting from api", "getting from db"
+Cache: "saving to db"
+ */
 class NewsDbProvider implements Source, Cache {
   Database db;
 
@@ -20,7 +24,7 @@ class NewsDbProvider implements Source, Cache {
     final path = join(documentDirectory.path, 'items.db');
     db = await openDatabase(path, version: 1,
         onCreate: (Database newDb, int version) {
-      newDb.execute('''
+          newDb.execute('''
           CREATE TABLE Items
             (
               id INTEGER PRIMARY KEY,
@@ -38,7 +42,7 @@ class NewsDbProvider implements Source, Cache {
               descendants INTEGER
             )
           ''');
-    });
+        });
   }
 
   Future<ItemModel> fetchItem(int id) async {
@@ -55,13 +59,23 @@ class NewsDbProvider implements Source, Cache {
   }
 
   Future<int> addItem(ItemModel item) {
-    return db.insert('Items', item.toMap());
+    return db.insert(
+      'Items',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 
-  //TODO
+  //TODO : this is a dummy method for now to satisfy the abstract class constrains
   Future<List<int>> fetchTopIds() {
     return null;
   }
+
+  Future<int> clear() {
+    return db.delete('items');
+  }
+
 }
 
+//calls the constructor and makes the db connection singleton
 final newsDbProvider = NewsDbProvider();

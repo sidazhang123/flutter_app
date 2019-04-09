@@ -15,21 +15,24 @@ class ItemModel {
   final String title;
   final int descendants;
 
+  // json to ItemModel
   ItemModel.fromJson(Map<String, dynamic> parsedJson)
       : id = parsedJson['id'],
-        deleted = parsedJson['deleted'],
+  // [setting_default_value] if null, set to false
+        deleted = parsedJson['deleted'] ?? false,
         type = parsedJson['type'],
         by = parsedJson['by'],
         time = parsedJson['time'],
-        text = parsedJson['text'],
-        dead = parsedJson['dead'],
+        text = parsedJson['text'] ?? '',
+        dead = parsedJson['dead'] ?? false,
         parent = parsedJson['parent'],
-        kids = parsedJson['kids'],
+        kids = parsedJson['kids'] ?? [],
         url = parsedJson['url'],
         score = parsedJson['score'],
         title = parsedJson['title'],
         descendants = parsedJson['descendants'];
 
+  // from DB query output to ItemModel
   ItemModel.fromDb(Map<String, dynamic> parsedJson)
       : id = parsedJson['id'],
         deleted = parsedJson['deleted'] == 1,
@@ -43,7 +46,7 @@ class ItemModel {
         url = parsedJson['url'],
         score = parsedJson['score'],
         title = parsedJson['title'],
-        descendants = parsedJson['descendants'];
+        descendants = parsedJson['descendants'] ?? 0;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
