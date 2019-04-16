@@ -4,7 +4,7 @@ import 'package:flutter_app/src/mixins/login_form_validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 //'with' must attach to a parent class to be inherited, and Object is generic
-class Bloc extends Object with Validators {
+class LoginBloc extends Object with Validators {
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
 
@@ -17,6 +17,7 @@ class Bloc extends Object with Validators {
   Stream<bool> get submitValid =>
       Observable.combineLatest2(email, password, (e, p) => true);
 
+
   //change data (get means getter)
   Function(String) get changeEmail => _emailController.sink.add;
 
@@ -26,6 +27,7 @@ class Bloc extends Object with Validators {
   submit() {
     final validEmail = _emailController.value.trim();
     final validPassword = _passwordController.value.trim();
+
     print("validEmail: $validEmail");
     print("validEmail: $validPassword");
   }

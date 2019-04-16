@@ -4,6 +4,7 @@ import '../blocs/stories_provider.dart';
 import '../models/item_model.dart';
 import '../widgets/loading_container.dart';
 
+
 class NewsListTile extends StatelessWidget {
   final int itemId;
 
@@ -24,14 +25,14 @@ class NewsListTile extends StatelessWidget {
             if (!itemSnapshot.hasData) {
               return LoadingContainer();
             }
-            return buildTile(itemSnapshot.data);
+            return buildTile(context, itemSnapshot.data);
           },
         );
       },
     );
   }
 
-  Widget buildTile(ItemModel item) {
+  Widget buildTile(BuildContext context, ItemModel item) {
     return Column(
       children: <Widget>[
         ListTile(
@@ -43,6 +44,10 @@ class NewsListTile extends StatelessWidget {
               Text('${item.descendants}'),
             ],
           ),
+          onTap: () {
+            Navigator.pushNamed(
+                context, '/news', arguments: <String, int>{'id': item.id});
+          },
         ),
         Divider(
           height: 8.0,

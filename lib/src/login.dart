@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'blocs/login_provider.dart';
 import 'screens/login_screen.dart';
 
-class app extends StatelessWidget {
+class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider(
-        child: MaterialApp(
-      title: 'log me in',
-      home: Scaffold(
-        body: LoginScreen(),
-      ),
+    return LoginProvider(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('log me in'),
+          ),
+          body: LoginScreen(),
     ));
   }
 }

@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 
 import '../widgets/cat.dart';
 
-class Home extends StatefulWidget {
-  HomeState createState() => HomeState();
+class CatScreen extends StatefulWidget {
+  CatScreenState createState() => CatScreenState();
 }
 
-class HomeState extends State<Home> with TickerProviderStateMixin {
+class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
   Animation<double> catAnimation;
   AnimationController catController;
   Animation<double> boxAnimation;
   AnimationController boxController;
-
+  int times = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    times = 0;
     const g_dur = 200;
     catController = AnimationController(
         duration: Duration(milliseconds: g_dur), vsync: this);
@@ -135,6 +136,11 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     } else {
       boxController.stop();
       catController.forward();
+    }
+    times += 1;
+    if (times > 2) {
+      times = 0;
+      Navigator.pushNamed(context, '/login');
     }
   }
 }

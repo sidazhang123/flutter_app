@@ -21,7 +21,7 @@ class ItemModel {
   // [setting_default_value] if null, set to false
         deleted = parsedJson['deleted'] ?? false,
         type = parsedJson['type'],
-        by = parsedJson['by'],
+        by = parsedJson['by'] ?? '',
         time = parsedJson['time'],
         text = parsedJson['text'] ?? '',
         dead = parsedJson['dead'] ?? false,
@@ -30,7 +30,7 @@ class ItemModel {
         url = parsedJson['url'],
         score = parsedJson['score'],
         title = parsedJson['title'],
-        descendants = parsedJson['descendants'];
+        descendants = parsedJson['descendants'] ?? 0;
 
   // from DB query output to ItemModel
   ItemModel.fromDb(Map<String, dynamic> parsedJson)

@@ -5,15 +5,18 @@ import '../widgets/news_list_tile.dart';
 import '../widgets/refresh.dart';
 
 class NewsList extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    final bloc = StoriesProvider.of(context);
-    bloc.fetchTopIds();
+    final storiesBloc = StoriesProvider.of(context);
+    storiesBloc.fetchTopIds();
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Top News'),
       ),
-      body: buildList(bloc),
+      body: buildList(storiesBloc),
     );
   }
 
