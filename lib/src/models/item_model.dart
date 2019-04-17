@@ -18,7 +18,7 @@ class ItemModel {
   // json to ItemModel
   ItemModel.fromJson(Map<String, dynamic> parsedJson)
       : id = parsedJson['id'],
-  // [setting_default_value] if null, set to false
+  // "??" means set default value
         deleted = parsedJson['deleted'] ?? false,
         type = parsedJson['type'],
         by = parsedJson['by'] ?? '',

@@ -9,6 +9,7 @@ import '../resources/repository.dart';
 class StoriesBloc {
   final _repository = Repository();
   final _topIds = PublishSubject<List<int>>();
+
   final _itemsOuput = BehaviorSubject<Map<int, Future<ItemModel>>>();
   final _itemsFetcher = PublishSubject<int>();
 
@@ -20,6 +21,8 @@ class StoriesBloc {
   // Getters to Sinks
   Function(int) get fetchItem => _itemsFetcher.sink.add;
 
+  // get items from network source or local cache => pipe into another stream for
+  // broadcasting to Tiles
   StoriesBloc() {
     _itemsFetcher.stream.transform(_itemsTransformer())
         .pipe(_itemsOuput);

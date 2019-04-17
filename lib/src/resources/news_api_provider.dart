@@ -6,6 +6,8 @@ import 'package:http/http.dart' show Client;
 import '../models/item_model.dart';
 import 'repository.dart';
 
+// blocked by the GFW
+// the APIs' intro is https://github.com/HackerNews/API
 final _baseUrl = 'https://hacker-news.firebaseio.com/v0';
 
 class NewsApiProvider implements Source {

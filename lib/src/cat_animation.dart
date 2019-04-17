@@ -11,6 +11,7 @@ class CatAnimation extends StatelessWidget {
     return MaterialApp(
       title: 'Animation',
       theme: ThemeData(primarySwatch: Colors.lightBlue),
+      // Navigator.pushNamed() calls onGenerateRoute's callback to find a route
       onGenerateRoute: routes,
     );
   }
@@ -21,21 +22,20 @@ class CatAnimation extends StatelessWidget {
       case '/news':
         return newsRouteHandler(settings, param);
       case '/login':
-        {
-          return MaterialPageRoute(builder: (context) => Login());
-        }
+        return MaterialPageRoute(builder: (context) => Login());
       case '/webview':
-        {
-          return MaterialPageRoute(builder: (context) =>
-              WebviewPage(param.containsKey('url') ? param['url'] : null));
-        }
+        return MaterialPageRoute(
+            builder: (context) =>
+                WebviewPage(param.containsKey('url') ? param['url'] : null));
       default:
-        {
-          return MaterialPageRoute(builder: (context) => CatScreen());
-        }
+      // the cat animation on the first screen
+        return MaterialPageRoute(builder: (context) => CatScreen());
     }
   }
 
+  // Helper function for route '/news'.
+  // Route to news list when no args (index of news) are given
+  // and to a news' comments page otherwise.
   MaterialPageRoute newsRouteHandler(RouteSettings settings,
       Map<String, dynamic> param) {
     {
@@ -44,8 +44,7 @@ class CatAnimation extends StatelessWidget {
       } else {
         return MaterialPageRoute(
             builder: (context) =>
-                News(param.containsKey('id') ? param['id'] : null))
-        ;
+                News(param.containsKey('id') ? param['id'] : null));
       }
     }
   }

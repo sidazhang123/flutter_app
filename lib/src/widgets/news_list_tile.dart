@@ -4,7 +4,6 @@ import '../blocs/stories_provider.dart';
 import '../models/item_model.dart';
 import '../widgets/loading_container.dart';
 
-
 class NewsListTile extends StatelessWidget {
   final int itemId;
 
@@ -16,12 +15,15 @@ class NewsListTile extends StatelessWidget {
     return StreamBuilder(
       stream: bloc.items,
       builder: (context, AsyncSnapshot<Map<int, Future<ItemModel>>> snapshot) {
+        // hold the place of an item with a "grey box" when its content is yet loaded.
+        // fetching an item is asynchronous. Snapshot.hasData when the first item arrives.
         if (!snapshot.hasData) {
           return LoadingContainer();
         }
         return FutureBuilder(
           future: snapshot.data[itemId],
           builder: (context, AsyncSnapshot<ItemModel> itemSnapshot) {
+            // wait for a specific item's data to arrive
             if (!itemSnapshot.hasData) {
               return LoadingContainer();
             }
@@ -45,8 +47,9 @@ class NewsListTile extends StatelessWidget {
             ],
           ),
           onTap: () {
-            Navigator.pushNamed(
-                context, '/news', arguments: <String, int>{'id': item.id});
+            // navigate to comments pages at the 4th layer
+            Navigator.pushNamed(context, '/news',
+                arguments: <String, int>{'id': item.id});
           },
         ),
         Divider(

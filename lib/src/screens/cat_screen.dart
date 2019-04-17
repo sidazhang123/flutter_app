@@ -13,13 +13,18 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
   AnimationController catController;
   Animation<double> boxAnimation;
   AnimationController boxController;
-  int times = 0;
+  int tapped;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    times = 0;
+    tapped = 0;
     const g_dur = 200;
+
+    // AnimationController defines the duration, and Tween defines the value
+    // changing within a range (begin/end) at a given pace (curve).
+    // Using this changing value in an AnimatedBuilder to animate any Widget.
+
     catController = AnimationController(
         duration: Duration(milliseconds: g_dur), vsync: this);
     catAnimation = Tween(begin: -35.0, end: -80.0)
@@ -29,6 +34,8 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
         vsync: this, duration: Duration(milliseconds: g_dur));
     boxAnimation = Tween(begin: pi * 0.6, end: pi * 0.65)
         .animate(CurvedAnimation(parent: boxController, curve: Curves.linear));
+
+    // Animation control
     boxAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         boxController.repeat(reverse: true);
@@ -41,13 +48,14 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text('Aniamation!'),
       ),
       body: GestureDetector(
         child: Center(
+          //elements placed from bottom to top layer in a stack
+
           child: Stack(
             overflow: Overflow.visible,
             children: <Widget>[
@@ -55,7 +63,6 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
               buildBox(),
               buildLeftFlap(),
               buildRightFlap(),
-//              buildCatAnimation(),
             ],
           ),
         ),
@@ -75,6 +82,7 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
           right: 0.0,
         );
       },
+      // load the static cat image which is stored in [root_directory]/assets/
       child: Cat(),
     );
   }
@@ -129,6 +137,7 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
     );
   }
 
+  // callback to reverse the animation & navigate to "login", the second screen.
   onTap() {
     if (catController.status == AnimationStatus.completed) {
       boxController.forward();
@@ -137,9 +146,9 @@ class CatScreenState extends State<CatScreen> with TickerProviderStateMixin {
       boxController.stop();
       catController.forward();
     }
-    times += 1;
-    if (times > 2) {
-      times = 0;
+    tapped += 1;
+    if (tapped > 4) {
+      tapped = 0;
       Navigator.pushNamed(context, '/login');
     }
   }

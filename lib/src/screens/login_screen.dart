@@ -3,20 +3,27 @@ import 'package:flutter/material.dart';
 import '../blocs/login_bloc.dart';
 import '../blocs/login_provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => LoginScreenState();
+}
+
+class LoginScreenState extends State<LoginScreen> {
+
   @override
   Widget build(BuildContext context) {
-    final bloc = LoginProvider.of(context);
+    // find the bloc which this context belongs to
+    final _bloc = LoginProvider.of(context);
     return Container(
       margin: EdgeInsets.all(20.0),
       child: Column(
         children: <Widget>[
-          emailField(bloc),
-          passwordField(bloc),
+          emailField(_bloc),
+          passwordField(_bloc),
           Container(
             margin: EdgeInsets.only(top: 15.0),
           ),
-          submitButton(bloc),
+          submitButton(_bloc),
         ],
       ),
     );
@@ -27,15 +34,15 @@ class LoginScreen extends StatelessWidget {
         // everything added to sink will be automatically processed
         // through the stream by a transformer(handler)
         stream: bloc.email,
-        //outputs are added back to sink and present in snapshot
+        // outputs are thrown back to sink and present in snapshot
+
         builder: (context, snapshot) {
           return TextField(
-            //put input text into changeEmail and add it to sink
+            // put input text into changeEmail and add it to sink
             onChanged: bloc.changeEmail,
             decoration: InputDecoration(
                 hintText: 'you@example.com',
                 labelText: 'Email Address',
-                //output sink
                 errorText: snapshot.error),
             keyboardType: TextInputType.emailAddress,
           );
@@ -57,22 +64,25 @@ class LoginScreen extends StatelessWidget {
         });
   }
 
+  // submitValid stream throws true, when both email and password
+  // have their desired inputs, and null otherwise.
   Widget submitButton(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.submitValid,
       builder: (context, AsyncSnapshot<bool> snapshot) {
         return RaisedButton(
-          child: Text('${snapshot.data}'),
+            child: Text('log in'),
           color: Colors.lightBlue,
+            // onPressed: null makes the button disable -> don't you submit until validated
           onPressed:
-          snapshot.hasData
-              ? () {
+          snapshot.hasData ? () {
             bloc.submit();
+            // navigate to "news list", the 3rd screen
             Navigator.pushNamed(context, '/news', arguments: null);
-          }
-              : null,
+          } : null
         );
       },
     );
   }
+
 }

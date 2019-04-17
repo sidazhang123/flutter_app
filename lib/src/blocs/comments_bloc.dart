@@ -28,6 +28,7 @@ class CommentsBloc {
       (Map<int, Future<ItemModel>> cache, int id, index) {
         cache[id] = _repository.fetchItem(id);
         cache[id].then((ItemModel item) {
+          // recursion: add kids(& kids' kids) to sink to go thru this transformer.
           item.kids.forEach((kidId) => getItemWithComments(kidId));
         });
         return cache;

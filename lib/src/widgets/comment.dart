@@ -52,10 +52,13 @@ class Comment extends StatelessWidget {
 //        .replaceAll('<p>', '\n\n')
 //        .replaceAll('</p>', '')
 //    .replaceAll('&#x2F;', '/');
+
+    // interpreting html elements
     return Html(
       data: item.text,
       onLinkTap: (url) {
         print("Opening $url...");
+        // open a webview when a link in page is clicked
         return Navigator.pushNamed(context, '/webview',
             arguments: <String, String>{'url': url});
       },
