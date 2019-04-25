@@ -4,6 +4,9 @@ import 'package:flutter_app/src/mixins/login_form_validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 /*
+ *    "Solved" - 华为/flutter的锅，打release包在IMC上测了，这个页只在华为各款手机出问题
+ *    三星 小米 1加 锤子 都没事。 华为个锤子
+ *
     Here comes a severe issue only shows on my physical Android device but the emulator.
     It could be due to the implementation of
     # route
@@ -24,6 +27,8 @@ import 'package:rxdart/rxdart.dart';
     # 似乎bloc是singleton，没有rebuild （每navigate一次会触发route stack中widgets的build()）
     # 可能和MaterialPageRoute嵌套blocProvider有关（应该provider在最外层）
     # 如果这是app实现的问题，目前已知global bloc可解, 但不优雅
+
+    ###
 
    */
 
@@ -49,8 +54,6 @@ class LoginBloc extends Object with Validators {
   Function(String) get changePassword => _passwordController.sink.add;
 
 
-//  ee(String s){_emailController.sink.add(s);print("e:   ${_emailController.value}");print("p:   ${_passwordController.value}");}
-//  pp(String s){_passwordController.sink.add(s);print("e:   ${_emailController.value}");print("p:   ${_passwordController.value}");}
   submit() {
     final validEmail = _emailController.value;
     final validPassword = _passwordController.value;
