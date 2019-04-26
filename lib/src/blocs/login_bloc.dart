@@ -4,7 +4,7 @@ import 'package:flutter_app/src/mixins/login_form_validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 /*
- *    "Solved" - 华为/flutter的锅，打release包在IMC上测了，这个页只在华为各款手机出问题
+ *    "Solved" - 华为/flutter的锅，打release包跨平台测了，这个页只在华为各款手机出问题
  *    三星 小米 1加 锤子 都没事。 华为个锤子
  *
     Here comes a severe issue only shows on my physical Android device but the emulator.
